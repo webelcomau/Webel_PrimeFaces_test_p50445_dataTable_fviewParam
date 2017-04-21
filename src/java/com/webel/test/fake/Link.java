@@ -62,7 +62,7 @@ public class Link extends FakeEntity {
         setUrlAsString(cloneMe.getUrlAsString());
     }
     
-    protected Link clone() throws CloneNotSupportedException {
+    public Link clone() throws CloneNotSupportedException {
         return new Link(this);
     }
     

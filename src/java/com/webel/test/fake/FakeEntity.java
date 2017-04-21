@@ -59,7 +59,7 @@ public class FakeEntity implements Serializable, Cloneable {
     }
 
     @Override
-    protected FakeEntity clone() throws CloneNotSupportedException {
+    public FakeEntity clone() throws CloneNotSupportedException {
         return new FakeEntity(this);
     }
 

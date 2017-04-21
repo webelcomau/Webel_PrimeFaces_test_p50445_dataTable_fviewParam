@@ -31,7 +31,7 @@ public class Element extends FakeEntity {
         }
     }
     
-    protected Element clone() throws CloneNotSupportedException {
+    public Element clone() throws CloneNotSupportedException {
         return new Element(this);
     }
     
