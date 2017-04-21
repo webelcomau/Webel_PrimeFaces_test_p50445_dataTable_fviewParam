@@ -45,12 +45,6 @@ The test web app uses a `FakeEntity`/`FakeQuery` system (no real database), and 
 
 ------
 
-#### How this mini test web app was prepared (so easily)
-
-This mini test web app was spawned from the new [NetBeans Ant-based PrimeFaces test template](https://github.com/webelcomau/Webel_PrimeFaces_test_template_NetBeans_Ant/tree/master/web) project from Webel IT Australia. Please see the README there for details about the FakeQuery/FakeEntity system used behind the scenes to get test apps like this up and running quickly. 
-
-------
-
 ### How to configure alternative Mojarra (JSF implementation) and PrimeFaces JAR libraries for comparative tests
 
 Often to investigate an issue one needs to experiment with different library versions and compare test runs.  This is quite easily done with this mini NetBeans web app. By default this web app will use the Mojarra bundled with your web app server (Glassfish as bundled with NetBeans, or Payara if you installed it extra), and a recent PrimeFaces community edittion version is included as a JAR under the `./lib` folder.
@@ -82,3 +76,10 @@ Often to investigate an issue one needs to experiment with different library ver
 
 ------
 
+#### How this mini test web app was prepared (so easily)
+
+This mini test web app was spawned from the new [NetBeans Ant-based PrimeFaces test template](https://github.com/webelcomau/Webel_PrimeFaces_test_template_NetBeans_Ant/tree/master/web) project from Webel IT Australia. Please see the README there for details about the FakeQuery/FakeEntity system used behind the scenes to get test apps like this up and running quickly. 
+
+------
+
+### 
