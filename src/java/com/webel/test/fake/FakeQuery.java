@@ -34,7 +34,9 @@ public class FakeQuery implements Serializable {
         List<FakeEntity> l = new ArrayList<>();
         for (Long id : entities.keySet()) {
             try {
-                l.add((FakeEntity) entities.get(id).clone());
+                FakeEntity clone = entities.get(id).clone();
+                clone.setDetached(true);
+                l.add(clone);
             } catch (CloneNotSupportedException ex) {
                 logger.log(Level.SEVERE, null, ex);
             }
@@ -104,9 +106,8 @@ public class FakeQuery implements Serializable {
         if (!entities.containsKey(entity.getId())) {
             throw new IllegalArgumentException("Can't merge entity with unknown id(" + entity.getId() + ") !");
         }
-        FakeEntity clone;
         try {
-            clone = entity.clone(); //! deep clone
+            FakeEntity clone = entity.clone(); //! deep clone
             clone.setDetached(false);
             entities.put(clone.getId(), clone);
         } catch (CloneNotSupportedException ex) {
