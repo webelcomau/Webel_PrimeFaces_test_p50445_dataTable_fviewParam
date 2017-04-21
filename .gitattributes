@@ -1,0 +1,12 @@
+# .gitattributes export-ignore
+# .gitignore export-ignore
+
+# 2016-08-10 Webel: Note top-level slash
+/nbproject/private export-ignore
+/build export-ignore
+/dist export-ignore
+/log export-ignore
+/bug export-ignore
+/tmp export-ignore
+
+

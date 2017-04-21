@@ -1,0 +1,77 @@
+/* 
+    Created on : Apr 18, 2017, 10:39:47 PM
+*/
+
+/*** PLEASE DO NOT EDIT THESE TOP-LEVEL STYLES USED IN HELP PAGES: PLEASE ADD NEW STYLES BELOW  ***/
+
+ul > li, ol > li {margin: 0.5ex 0;}
+
+code {
+    font-family: Courier;
+    font-size: 0.95em;
+}
+
+.warn {
+    color:orange;    
+}
+
+.error {
+    color:red;    
+}
+
+.ok {
+    color:#00cc33;    
+}
+
+/* Means "note well" */
+.nb, .nota-bene {
+    color:magenta;
+    font-style: italic;
+}
+
+div.gotit {
+    color:black;
+    text-align: center;
+    padding-top: 0.5ex;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.warn-box {
+    color: orange; 
+    border: 2px solid #cc9900; 
+    padding: 1ex; 
+    margin: 2ex; 
+}
+
+.help-box {
+    color:black; 
+    background-color: #eef; 
+    border: 2px solid blue; 
+    padding: 1ex; 
+    margin: 2ex;     
+}
+
+div.link-button {
+    margin:10px 2px;
+}
+
+div.link-button > a {
+    padding:1px 2px;
+    border:2px outset silver;
+    background-color: #ddd;    
+}
+
+div#header {
+    background-color: #dfd;
+    padding:0.5ex 1ex;
+    border:1px solid silver;
+}
+
+div#header-links {
+ padding:0ex 1ex;
+ border-bottom:1px solid silver;
+}
+
+/*** PLEASE ADD YOUR NEW STYLES BELOW HERE ***/
+

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"                      
+      >
+
+    <!-- DO EDIT this title parameter as required -->         
+    <ui:param name="title" value="PrimeFaces: TEST: p154868: row-editable dataTable: first row edit invokes f:viewParam (again) before row edit listener and validation check"/>
+
+    <h:head>
+        <title>#{title}</title>
+    </h:head>
+
+    <h:body>
+
+        <!-- ALWAYS include this in every page or template !  -->
+        <ui:include src="/common.xhtml"/>
+
+        <h2>#{title}</h2>
+
+
+        <!-- DO EDIT this panel to describe your test -->
+        <p:panel
+            header="About this mini test web app" 
+            toggleable="true" 
+            collapsed="true"
+            style="width:50em;"
+            >
+            <p>
+                This mini web app is for testing the calling 
+                of f:viewParam on the first row-edit and "tick save"
+                of a row-editable p:datable. Visit also:
+                <ul>
+                    <li>Primefaces community forum: 
+                        <a href="https://forum.primefaces.org/viewtopic.php?f=3&amp;t=50445&amp;p=154868#p154868">p:dataTable how prevent f:viewParam being invoked on 1st rowEdit then tick save using JSF at XHTML level (not in bean)</a>
+                    </li>
+                    <li>
+                        Stackoverflow: <a href="http://stackoverflow.com/questions/43408949/pdatatable-how-prevent-fviewparam-being-invoked-on-1st-rowedit-then-tick-save?noredirect=1#comment73878640_43408949">p:dataTable how prevent f:viewParam being invoked on 1st rowEdit then “tick save” using JSF at XHTML level (not in Java in backing bean)</a>.
+                    </li>
+                </ul>
+            </p>
+        </p:panel>
+        
+        <fieldset style="margin:1ex 0;">
+            <legend>Links to test pages</legend>
+            <ul>
+                <li><h:link 
+                        outcome="/test/test_dataTable_p154868?id=0" 
+                        value="TEST: p154868: edit form for a fake entity Element by f:viewParam id with an embedded row-editable dataTable for editing Links with URL validation"/>
+            </li>
+        </ul>
+    </fieldset>   
+
+</h:body>
+</html>
+

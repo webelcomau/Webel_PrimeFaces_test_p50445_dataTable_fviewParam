@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:util="http://xmlns.jcp.org/jsf/composite/util"
+    >
+
+    <!--
+     Original author: Darren Kelly (Webel IT Australia). PLEASE EDIT THIS PAGE CAREFULLY (if at all)!
+    
+     You are welcome to adapt this page, which is a starting point for a common header include page.
+     If you copy and adapt this page, please however change the authorship declaration !
+    
+     Most of the information in this common header is interrogated live,
+     however some remarks about the IDE and server versions are "by hand".
+     You should change these below if they don't apply to your test suite.
+    -->     
+
+    <h:outputStylesheet name="css/styles.css"/>
+
+    <div id="header"> 
+        <div>
+            <em><b>Last accessed:&nbsp;</b> <h:outputText value="#{session.lastAccessedTime}">
+                    <f:convertDateTime pattern="yyyy/MM/dd hh:mm:ss" type="date" />
+                </h:outputText>
+            </em>
+        </div>   
+        <div>
+            <em><b>Platform:</b> Primefaces version: #{primefacesUtil.primefacesVersion}; #{facesContext.class.package.implementationTitle}:  #{facesContext.class.package.implementationVersion}; Java version: #{javaUtil.javaVersion}</em>
+        </div>
+
+        <hr/>    
+
+        <!-- You may wish to edit these IDE and server specs -->
+        <div>
+            <em>This mini test web app is currently intended for use with 
+                <a href="https://netbeans.org/downloads/index.html" target="_blank">NetBeans IDE</a> 8.2 and Glassfish 4.1.1 (or <a href="http://www.payara.fish/" target="_blank">Payara41</a>)</em>
+        </div>
+    </div>
+
+    <div id="header-links"> 
+        <util:home/>
+    </div>
+
+
+</ui:composition>

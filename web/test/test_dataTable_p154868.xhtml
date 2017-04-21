@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"                      
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+
+    <!--
+    Author: Darren Kelly (Webel IT Australia).
+    
+    Analysis of: https://forum.primefaces.org/viewtopic.php?f=3&t=50445&p=154868#p154868   
+    p:dataTable how prevent f:viewParam being invoked on 1st rowEdit then tick save using JSF at XHTML level (not in bean)
+    -->
+
+    <ui:param name="title" value="PrimeFaces: Webel test: p154868: edit a fake entity Element by f:viewParam id with embedded p:dataTable Link editor"/>
+
+    <h:head>
+        <title>#{title}</title>
+    </h:head>
+
+    <h:body>
+
+        <ui:include src="/common.xhtml"/>        
+
+        <f:view>
+            <f:metadata>
+                <f:viewParam name="id" value="#{viewBean.id}"/>        
+            </f:metadata>
+        </f:view>
+
+        <h2>#{title}</h2>
+
+        <p:panel 
+            header="Instructions to reproduce issue/concern"
+            style="width:50em;margin:1ex 0;"
+            toggleable="true"
+            >
+            <ol>
+                <li>
+                    On initial @ViewScoped page load, a f:viewParam for <code>setId(Long)</code> is invoked, 
+                    which loads from a "fake" database a fake entity Element (which carries Links)
+                    for editing (assigned to <code>{viewBean.selected}</code>).
+                    Any changes made to Links using the Links editor table at the bottom are 
+                    not to be actually saved to database until the entire edit form is submitted. 
+                    But interim changes may be seen in the updated read-only <b>Links view</b> 
+                    fieldset above it.
+                </li>
+                <li>
+                    Perform a row edit on the 1st row of the embedded Links editor table.
+                    Change the Link URL and edit an invalid URL such as "invalid1".
+                    The rowEdit listener is <code>{viewBean.onLinkRowEdit(RowEditEvent event)</code>,
+                    which performs a validation check on the submitted URL,
+                    <span class="warn">but on the first "tick save" it does not detect an invalid URL</span>,
+                    and the server log echo shows that the URL it has received has not changed.
+                    This can also been seen by an INFO level p:messages receipt.
+                </li>
+                <li>
+                    The reason: On  the initial "tick save" the f:viewParam for setId(Long) 
+                    is invoked <b>again</b> (<b>BEFORE</b> the rowEdit listener) and reloads
+                    from database the Element that carries the Links, <span class="warn">over-writing the interim
+                    changes made to the edited Link</span>. This can be seen by an echo in the server log.
+                    By the time the Link's URL reaches the row edit listener it has been reverted 
+                    to the original value  (but the updated read-only Links View above 
+                    the Links editor table shows the "apparently edited" value).
+                </li>
+                <li>
+                    Perform another row edit <b>on the same 1st row</b> of the embedded Links editor table,
+                    this time enter "invalid2" as a URL.
+                </li>
+                <li>
+                    On "tick save" again the f:viewParam for setId(Long) <b>is NOT invoked</b>,
+                    so the Element (and its Links) are not reloaded).
+                    Thus the changes made to the edited Link are received correctly by
+                    the row edit listener, and the URL validation check fails correctly
+                    (see the logged error message and the p:messages ERROR receipt).
+                </li>
+            </ol>
+        </p:panel>
+
+        <h:form id="form" rendered="#{not empty viewBean.selected}">
+
+            <p:messages id="messages"/>
+
+            <p:panelGrid id="editor" columns="2" >
+                <p:outputLabel value="ID:"/>
+                <h:outputText 
+                    value="#{viewBean.selected.id}"
+                    title="readonly"
+                    />
+
+                <p:outputLabel 
+                    for="name" 
+                    value="Name:"/>
+                <h:panelGrid columns="2">
+                    <p:inputText 
+                        id="name" 
+                        value="#{viewBean.selected.name}"
+                        required="true"
+                        />
+                    <p:message for="name" display="icon"/>
+                </h:panelGrid>
+
+            </p:panelGrid>
+
+            <h:panelGroup id="links_view" layout="block" style="margin-top: 1ex;">
+                <fieldset><legend>Links view (interim)</legend>
+                    <ol>
+                        <ui:repeat var="link" value="#{viewBean.selected.links}">
+                            <li>#{link}</li>
+                        </ui:repeat>                    
+                    </ol>
+                </fieldset>
+            </h:panelGroup>
+
+            <p:dataTable
+                style="margin-top: 1ex;"
+                id="links_table"
+                editable="true"                    
+                var="link"
+                value="#{viewBean.selected.links}"
+                >   
+
+                <p:ajax 
+                    event="rowEdit" 
+                    listener="#{viewBean.onLinkRowEdit}"
+                    update=":form:messages :form:editor :form:links_view :form:links_table"
+                    />
+
+                <p:column headerText="Link title">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{link.name}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText 
+                                label="Link title"
+                                id="name" 
+                                value="#{link.name}"
+                                required="true"
+                                />
+                        </f:facet>
+                    </p:cellEditor>                        
+                </p:column>
+
+                <p:column headerText="Link URL">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{link.urlAsString}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText 
+                                label="Link URL"
+                                id="url" 
+                                value="#{link.urlAsString}"
+                                required="true"
+                                />
+                            <p:message 
+                                for="url"
+                                display="icon"                                        
+                                />
+                        </f:facet>
+                    </p:cellEditor>                        
+                </p:column>
+
+                <p:column headerText="EDIT!">
+                    <p:rowEditor />
+                </p:column>                    
+            </p:dataTable>
+            
+            <p:commandButton
+                update=":form:messages :form:editor :form:links_view :form:links_table"
+                action="#{viewBean.update()}"
+                value="Submit"
+                style="margin-top:1ex;"
+                />
+
+        </h:form> 
+
+    </h:body>
+</html>
+
